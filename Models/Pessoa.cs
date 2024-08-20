@@ -2,9 +2,11 @@ namespace DesafioProjetoHospedagem.Models;
 
 public class Pessoa
 {
+    public string Nome { get; set;} 
+    public string Sobrenome {get; set; } 
     public Pessoa() { }
 
-    public Pessoa(string nome)
+    public Pessoa(string nome) 
     {
         Nome = nome;
     }
@@ -15,7 +17,26 @@ public class Pessoa
         Sobrenome = sobrenome;
     }
 
-    public string Nome { get; set; }
-    public string Sobrenome { get; set; }
-    public string NomeCompleto => $"{Nome} {Sobrenome}".ToUpper();
+    public string NomeCompletoFormatado()
+    {
+        string NomeCompleto = Nome + ' ' + Sobrenome;
+        string[] nomes = NomeCompleto.Split(' ');
+
+        for (int i = 0; i < nomes.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(nomes[i]))
+            {
+                nomes[i] = char.ToUpper(nomes[i][0]) + nomes[i][1..].ToLower();
+            }
+        }
+        return string.Join(' ', nomes);
+    }
+    public static Pessoa CriarPessoa(string nome, string sobrenome)
+    {
+        return new Pessoa
+        {
+            Nome = nome,
+            Sobrenome = sobrenome
+        };
+    }
 }
